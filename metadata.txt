@@ -34,6 +34,7 @@ tags=DXF, DWG, CAD, AutoCAD, export, vector, layers, categories, true color, car
 homepage=https://github.com/kmlidar/CartoDXF
 donate=https://www.paypal.com/donate/?hosted_button_id=UF9SYUY42GWTG
 category=Vector
+license=GPLv2
 icon=icons/icon.png
 experimental=False
 deprecated=False
