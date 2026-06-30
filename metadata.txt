@@ -1,0 +1,39 @@
+[general]
+name=CartoDXF
+qgisMinimumVersion=3.16
+qgisMaximumVersion=4.99
+description=Export QGIS vector layers to a professional DXF, one DXF layer per category, with real colors, line widths and line types. / Exporta capas vectoriales de QGIS a un DXF profesional, una capa DXF por categoría, con colores, grosores y tipos de línea reales.
+version=1.0.0
+author=Kiko Molina
+email=kmlidar@gmail.com
+about=QGIS plugin to export loaded vector layers (points, lines, polygons) to a single
+    professional DXF file, ready to open in AutoCAD or any CAD software.
+
+    Main features:
+    - One DXF layer per category: choose a field per QGIS layer to split it into
+      several DXF layers automatically (e.g. one DXF layer per road type, per land use...).
+    - Independent label/text field: write any field value as DXF text next to each
+      feature, regardless of the field used for the DXF layer name.
+    - Exact colors (true color RGB) read from the QGIS symbology, plus an automatic
+      ACI fallback for older DXF viewers that don't support true color.
+    - Real line widths and line types (dashed, dotted, dash-dot...) taken from the
+      QGIS simple line symbology.
+    - Polygons exported with solid fill (hatch) and independent outline; optional
+      setting to make the outline match the fill color, useful with "Categorized"
+      renderers where only the fill color varies.
+    - Points exported as DXF POINT entities, with an option to also insert a DXF
+      block (INSERT) approximating the QGIS marker shape (circle, square, triangle,
+      diamond, cross, X, star, pentagon, hexagon...).
+    - Automatic reprojection to the QGIS project CRS.
+    - A faulty feature (invalid geometry, unusual category value...) is skipped
+      instead of aborting the whole export.
+
+tracker=https://github.com/kmlidar/CartoDXF/issues
+repository=https://github.com/kmlidar/CartoDXF
+tags=DXF, DWG, CAD, AutoCAD, export, vector, layers, categories, true color, cartografia, vector, capas, exportar
+homepage=https://github.com/kmlidar/CartoDXF
+donate=https://www.paypal.com/donate/?hosted_button_id=UF9SYUY42GWTG
+category=Vector
+icon=icons/icon.png
+experimental=False
+deprecated=False

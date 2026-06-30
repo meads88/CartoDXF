@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="8" fill="#1A3A5C"/>
+  <text x="32" y="42" font-family="monospace" font-size="34" fill="white"
+        text-anchor="middle" font-weight="bold">DXF</text>
+  <rect x="4"  y="48" width="17" height="5" rx="2" fill="#90EE90"/>
+  <rect x="24" y="48" width="17" height="5" rx="2" fill="#5599CC"/>
+  <rect x="44" y="48" width="17" height="5" rx="2" fill="#FF6B6B"/>
+</svg>
