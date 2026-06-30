@@ -5,7 +5,7 @@ qgisMaximumVersion=4.99
 description=Export QGIS vector layers to a professional DXF, one DXF layer per category, with real colors, line widths and line types. / Exporta capas vectoriales de QGIS a un DXF profesional, una capa DXF por categoría, con colores, grosores y tipos de línea reales.
 version=1.0.0
 author=Kiko Molina
-email=kmlidar@gmail.com
+email=kmlidar@outlook.com
 about=QGIS plugin to export loaded vector layers (points, lines, polygons) to a single
     professional DXF file, ready to open in AutoCAD or any CAD software.
 
