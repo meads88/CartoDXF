@@ -3,7 +3,7 @@ name=CartoDXF
 qgisMinimumVersion=3.16
 qgisMaximumVersion=4.99
 description=Export QGIS vector layers to a professional DXF, one DXF layer per category, with real colors, line widths and line types. / Exporta capas vectoriales de QGIS a un DXF profesional, una capa DXF por categoría, con colores, grosores y tipos de línea reales.
-version=1.0.0
+version=1.1.0
 author=Kiko Molina
 email=kmlidar@outlook.com
 about=QGIS plugin to export loaded vector layers (points, lines, polygons) to a single
@@ -18,9 +18,11 @@ about=QGIS plugin to export loaded vector layers (points, lines, polygons) to a 
       ACI fallback for older DXF viewers that don't support true color.
     - Real line widths and line types (dashed, dotted, dash-dot...) taken from the
       QGIS simple line symbology.
-    - Polygons exported with solid fill (hatch) and independent outline; optional
-      setting to make the outline match the fill color, useful with "Categorized"
-      renderers where only the fill color varies.
+    - Polygons exported with fill (hatch) and independent outline: solid fill or
+      a selectable pattern (diagonal lines, horizontal lines, grid, dots) with
+      adjustable scale; optional setting to make the outline match the fill
+      color, useful with "Categorized" renderers where only the fill color
+      varies.
     - Points exported as DXF POINT entities, with an option to also insert a DXF
       block (INSERT) approximating the QGIS marker shape (circle, square, triangle,
       diamond, cross, X, star, pentagon, hexagon...).
@@ -30,6 +32,15 @@ about=QGIS plugin to export loaded vector layers (points, lines, polygons) to a 
 
 tracker=https://github.com/kmlidar/CartoDXF/issues
 repository=https://github.com/kmlidar/CartoDXF
+changelog=1.1.0
+    - Corregido: el checkbox de cada capa individual no respondía al clic (solo
+      funcionaban "Seleccionar todas"/"Deseleccionar todas").
+    - Nuevo: selector de idioma de la interfaz (Español/English).
+    - Nuevo: patrón de relleno (hatch) seleccionable -sólido, líneas diagonales,
+      líneas horizontales, rejilla, puntos- con control de escala.
+    - Corregido: la ventana podía encogerse verticalmente hasta solapar textos
+      y controles; ahora respeta un tamaño mínimo acorde al contenido.
+
 tags=DXF, DWG, CAD, AutoCAD, export, vector, layers, categories, true color, cartografia, vector, capas, exportar
 homepage=https://github.com/kmlidar/CartoDXF
 donate=https://www.paypal.com/donate/?hosted_button_id=UF9SYUY42GWTG
