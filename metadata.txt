@@ -3,7 +3,7 @@ name=CartoDXF
 qgisMinimumVersion=3.16
 qgisMaximumVersion=4.99
 description=Export QGIS vector layers to a professional DXF, one DXF layer per category, with real colors, line widths and line types. / Exporta capas vectoriales de QGIS a un DXF profesional, una capa DXF por categoría, con colores, grosores y tipos de línea reales.
-version=1.1.0
+version=1.1.1
 author=Kiko Molina
 email=kmlidar@outlook.com
 about=QGIS plugin to export loaded vector layers (points, lines, polygons) to a single
@@ -32,14 +32,13 @@ about=QGIS plugin to export loaded vector layers (points, lines, polygons) to a 
 
 tracker=https://github.com/kmlidar/CartoDXF/issues
 repository=https://github.com/kmlidar/CartoDXF
-changelog=1.1.0
-    - Corregido: el checkbox de cada capa individual no respondía al clic (solo
-      funcionaban "Seleccionar todas"/"Deseleccionar todas").
-    - Nuevo: selector de idioma de la interfaz (Español/English).
-    - Nuevo: patrón de relleno (hatch) seleccionable -sólido, líneas diagonales,
-      líneas horizontales, rejilla, puntos- con control de escala.
-    - Corregido: la ventana podía encogerse verticalmente hasta solapar textos
-      y controles; ahora respeta un tamaño mínimo acorde al contenido.
+changelog=1.1.1
+    - Fixed: on Linux, automatic installation of the ezdxf library could fail
+      with no clear explanation, due to the "externally-managed-environment"
+      protection present in recent Ubuntu/Debian Python installations. The
+      plugin now tries several installation strategies automatically, and if
+      it still fails, the error message shows the real reason and how to
+      install ezdxf manually.
 
 tags=DXF, DWG, CAD, AutoCAD, export, vector, layers, categories, true color, cartografia, vector, capas, exportar
 homepage=https://github.com/kmlidar/CartoDXF

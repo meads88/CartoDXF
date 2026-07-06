@@ -268,8 +268,7 @@ _STRINGS = {
         grp_layers='Capas a exportar',
         btn_all='Seleccionar todas',
         btn_none='Deseleccionar todas',
-        col_header='  ☑  Capa                                    '
-                    'Capa DXF                       Texto/etiqueta',
+        col_header='  ☑  Capa                                    Capa DXF                       Texto/etiqueta',
         col_dxf='Capa DXF:',
         col_label='Texto/etiqueta:',
         combo_layer_name='(nombre de capa)',
@@ -279,7 +278,7 @@ _STRINGS = {
         chk_labels='Exportar etiquetas como texto DXF',
         chk_hatch='Exportar relleno de polígonos (hatch)',
         chk_hatch_tooltip='Activo: exporta relleno en áreas (sólido o con patrón).\n'
-                           'Inactivo: exporta solo los contornos cerrados.',
+        'Inactivo: exporta solo los contornos cerrados.',
         lbl_hatch_pattern='Patrón de relleno:',
         hatch_patterns=(
             ('Sólido', 'SOLID'),
@@ -319,8 +318,7 @@ _STRINGS = {
         grp_layers='Layers to export',
         btn_all='Select all',
         btn_none='Deselect all',
-        col_header='  ☑  Layer                                    '
-                    'DXF layer                       Text/label',
+        col_header='  ☑  Layer                                    DXF layer                       Text/label',
         col_dxf='DXF layer:',
         col_label='Text/label:',
         combo_layer_name='(layer name)',
@@ -330,7 +328,7 @@ _STRINGS = {
         chk_labels='Export labels as DXF text',
         chk_hatch='Export polygon fill (hatch)',
         chk_hatch_tooltip='Enabled: exports area fill (solid or pattern).\n'
-                           'Disabled: exports only the closed outlines.',
+        'Disabled: exports only the closed outlines.',
         lbl_hatch_pattern='Fill pattern:',
         hatch_patterns=(
             ('Solid', 'SOLID'),
@@ -771,15 +769,19 @@ class CartoDXFDialog(QDialog):
 
     def _update_theme_button(self):
         if self._theme == 'dark':
-            self.btn_theme.setText("☀️  Modo claro" if self._lang == 'es' else "☀️  Light mode")
-            self.btn_theme.setToolTip("Cambiar a modo claro (fondos claros, textos oscuros)"
-                                       if self._lang == 'es' else
-                                       "Switch to light mode (light background, dark text)")
+            if self._lang == 'es':
+                self.btn_theme.setText("☀️  Modo claro")
+                self.btn_theme.setToolTip("Cambiar a modo claro (fondos claros, textos oscuros)")
+            else:
+                self.btn_theme.setText("☀️  Light mode")
+                self.btn_theme.setToolTip("Switch to light mode (light background, dark text)")
         else:
-            self.btn_theme.setText("🌙  Modo oscuro" if self._lang == 'es' else "🌙  Dark mode")
-            self.btn_theme.setToolTip("Cambiar a modo oscuro (fondos oscuros, textos claros)"
-                                       if self._lang == 'es' else
-                                       "Switch to dark mode (dark background, light text)")
+            if self._lang == 'es':
+                self.btn_theme.setText("🌙  Modo oscuro")
+                self.btn_theme.setToolTip("Cambiar a modo oscuro (fondos oscuros, textos claros)")
+            else:
+                self.btn_theme.setText("🌙  Dark mode")
+                self.btn_theme.setToolTip("Switch to dark mode (dark background, light text)")
 
     # ── Idioma ────────────────────────────────────────────────────────────────
 

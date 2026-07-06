@@ -34,7 +34,7 @@ def _install_ezdxf():
     import glob
 
     exe = sys.executable
-    # En QGIS el ejecutable es qgis.exe; buscamos python.exe en apps/Python3*
+    # En QGIS Windows el ejecutable es qgis.exe; buscamos python.exe en apps/Python3*
     if 'python' not in os.path.basename(exe).lower():
         parent = os.path.dirname(os.path.dirname(exe))
         hits = sorted(glob.glob(os.path.join(parent, 'apps', 'Python3*')), reverse=True)
@@ -44,19 +44,44 @@ def _install_ezdxf():
                 exe = candidate
                 break
 
-    try:
-        subprocess.check_call(
-            [exe, '-m', 'pip', 'install', 'ezdxf', '--quiet'],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
-    except subprocess.CalledProcessError as e:
-        raise RuntimeError(
-            "No se pudo instalar ezdxf automáticamente.\n\n"
-            "Instálalo manualmente desde la OSGeo4W Shell (como Administrador):\n"
-            "  python -m pip install ezdxf\n\n"
-            f"(Error: {e})"
-        )
+    # Distintas combinaciones de flags a probar en orden. En Linux (Ubuntu/Debian
+    # 23.04+, y por tanto muchas instalaciones de QGIS en Linux) pip rechaza
+    # instalar en el Python del sistema salvo que se indique --break-system-packages
+    # o --user, así que probamos varias estrategias antes de rendirnos.
+    attempts = [
+        ['--quiet'],
+        ['--quiet', '--user'],
+        ['--quiet', '--break-system-packages'],
+        ['--quiet', '--user', '--break-system-packages'],
+    ]
+
+    last_output = ""
+    for flags in attempts:
+        cmd = [exe, '-m', 'pip', 'install', 'ezdxf'] + flags
+        try:
+            result = subprocess.run(
+                cmd,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+            )
+            if result.returncode == 0:
+                return
+            last_output = result.stdout or ""
+        except Exception as e:
+            last_output = str(e)
+
+    raise RuntimeError(
+        "No se pudo instalar ezdxf automáticamente.\n\n"
+        "Instálalo manualmente:\n"
+        "  - Windows (OSGeo4W Shell, como Administrador):\n"
+        "      python -m pip install ezdxf\n"
+        "  - Linux:\n"
+        "      python3 -m pip install ezdxf --break-system-packages\n"
+        "    (o crea un entorno virtual e indícaselo a QGIS)\n\n"
+        f"Comando probado: {exe} -m pip install ezdxf\n"
+        f"Detalle del último intento:\n{last_output.strip()[-800:]}"
+    )
 
 
 # ── Helpers de color ──────────────────────────────────────────────────────────
