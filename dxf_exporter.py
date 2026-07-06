@@ -427,7 +427,7 @@ class DXFExporter:
         pts2d = [(p[0], p[1]) for p in points]
         self.msp.add_lwpolyline(pts2d, dxfattribs=attrs, close=closed)
 
-    def _add_hatch(self, exterior, holes, layer_name, props):
+    def _add_hatch(self, exterior, holes, layer_name, props, pattern='SOLID', scale=1.0):
         fill_color = props.get('fill_color') or props.get('color')
         if fill_color is None or fill_color.alpha() < 10:
             return
@@ -436,7 +436,18 @@ class DXFExporter:
         aci = _qcolor_to_aci(fill_color)
 
         hatch = self.msp.add_hatch(dxfattribs={'layer': layer_name})
-        hatch.set_solid_fill(color=aci, rgb=(r, g, b))
+        if not pattern or pattern == 'SOLID':
+            hatch.set_solid_fill(color=aci, rgb=(r, g, b))
+        else:
+            try:
+                hatch.set_pattern_fill(pattern, color=aci, scale=scale)
+                # set_pattern_fill solo admite color ACI; el color real (RGB)
+                # se asigna aparte para que coincida con el de QGIS.
+                hatch.rgb = (r, g, b)
+            except Exception:
+                # Nombre de patrón no reconocido por ezdxf: se recurre al
+                # relleno sólido para no perder la exportación de la capa.
+                hatch.set_solid_fill(color=aci, rgb=(r, g, b))
 
         # Contorno exterior
         ext2d = [(p[0], p[1]) for p in exterior]
@@ -457,7 +468,7 @@ class DXFExporter:
 
     def _process_geometry(self, geom, transform, layer_name, props, geom_type, export_hatch=True,
                           export_symbol_block=False, symbol_size=1.0,
-                          outline_uses_fill_color=True):
+                          outline_uses_fill_color=True, hatch_pattern='SOLID', hatch_scale=1.0):
         from qgis.core import QgsWkbTypes
         if geom is None or geom.isEmpty():
             return
@@ -497,7 +508,7 @@ class DXFExporter:
             ext = [self._pt(p, transform) for p in poly[0]]
             holes = [[self._pt(p, transform) for p in ring] for ring in poly[1:]]
             if export_hatch:
-                self._add_hatch(ext, holes, layer_name, props)
+                self._add_hatch(ext, holes, layer_name, props, hatch_pattern, hatch_scale)
             outline_props = props
             if outline_uses_fill_color and props.get('fill_color') is not None:
                 # El contorno hereda el color de relleno: en simbología
@@ -518,7 +529,7 @@ class DXFExporter:
                 ext = [self._pt(p, transform) for p in poly[0]]
                 holes = [[self._pt(p, transform) for p in ring] for ring in poly[1:]]
                 if export_hatch:
-                    self._add_hatch(ext, holes, layer_name, props)
+                    self._add_hatch(ext, holes, layer_name, props, hatch_pattern, hatch_scale)
                 outline_props = props
                 if outline_uses_fill_color and props.get('fill_color') is not None:
                     outline_props = dict(props)
@@ -532,7 +543,7 @@ class DXFExporter:
     def add_layer(self, qgis_layer, category_field=None, label_field=None,
                   label_height=2.0, export_labels=True, export_hatch=True,
                   export_symbol_block=False, symbol_size=1.0,
-                  outline_uses_fill_color=True):
+                  outline_uses_fill_color=True, hatch_pattern='SOLID', hatch_scale=1.0):
         """
         Procesa una capa QGIS completa.
         category_field: campo cuyo valor se usa como nombre de capa DXF.
@@ -607,7 +618,7 @@ class DXFExporter:
                 # ── Geometría ────────────────────────────────────────────
                 self._process_geometry(geom, transform, layer_name, props, qgis_layer.geometryType(),
                                        export_hatch, export_symbol_block, symbol_size,
-                                       outline_uses_fill_color)
+                                       outline_uses_fill_color, hatch_pattern, hatch_scale)
 
                 # ── Etiquetas ────────────────────────────────────────────
                 if export_labels and label_field:
